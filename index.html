@@ -2,147 +2,527 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة الموقع التفاعلية</title>
-    
-    <!-- Leaflet CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>سهرتنا - سهرتك بكبسة زر</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <!-- Cairo Font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen active">
+        <div class="logo-container">
+            <div class="logo-img-container">
+                <img src="img/logo.png" alt="سهرتنا" class="logo-image">
+            </div>
+            <div class="logo-text">سهرتنا</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="main-app">
+        <!-- Header -->
+        <header class="app-header">
             <div class="header-content">
-                <h1><i class="fas fa-map-marked-alt"></i> خريطة الموقع التفاعلية</h1>
-                <p class="subtitle">ابحث عن موقعك الحالي وحدده على الخريطة بنقطة حمراء</p>
+                <div class="header-logo">
+                    <img src="img/logo.png" alt="سهرتنا" class="header-logo-img">
+                </div>
+                <div class="header-text">
+                    <h1>سهرتنا</h1>
+                    <p class="subtitle">سهرتك بكبسة زر بدا</p>
+                </div>
+                <div class="header-cart">
+                    <button class="cart-icon-btn" id="cart-icon-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                    <div class="cart-total" id="cart-total">0 ل.س</div>
+                </div>
             </div>
         </header>
 
-        <main>
-            <div class="control-panel">
-                <button id="locateBtn" class="btn locate-btn">
-                    <i class="fas fa-location-crosshairs"></i>
-                    <span>تحديد موقعي</span>
-                </button>
-                
-                <button id="resetBtn" class="btn reset-btn">
-                    <i class="fas fa-sync-alt"></i>
-                    <span>العودة للاذقية</span>
-                </button>
-                
-                <div class="zoom-controls">
-                    <button id="zoomIn" class="zoom-btn">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button id="zoomOut" class="zoom-btn">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
+        <!-- Main Content -->
+        <main class="app-content">
+            <!-- Categories Tabs -->
+            <div class="categories-tabs">
+                <button class="tab-btn active" data-tab="hookah">الاراكيل</button>
+                <button class="tab-btn" data-tab="drinks">المشروبات</button>
+                <button class="tab-btn" data-tab="desserts">الحلويات</button>
+                <button class="tab-btn" data-tab="games">الألعاب</button>
             </div>
 
-            <div class="map-container">
-                <div id="map"></div>
-                
-                <div class="coordinates-card">
-                    <div class="coords-header">
-                        <i class="fas fa-globe-asia"></i>
-                        <h3>الإحداثيات</h3>
-                    </div>
-                    <div class="coords-content">
-                        <div class="coord-item">
-                            <span class="coord-label">خط العرض:</span>
-                            <span id="latValue" class="coord-value">--</span>
+            <!-- Category Content -->
+            <div class="categories-content">
+                <!-- Hookah Section -->
+                <div id="hookah" class="category-section active">
+                    <h2 class="section-title">الاراكيل <span class="price-tag">17,000 ليرة</span></h2>
+                    <div class="items-grid">
+                        <div class="item-card" data-item="تفاحتين" data-price="17000" data-img="shesha/apple.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">تفاحتين</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>تفاحتين</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="coord-item">
-                            <span class="coord-label">خط الطول:</span>
-                            <span id="lngValue" class="coord-value">--</span>
+                        <div class="item-card" data-item="نعنع" data-price="17000" data-img="shesha/mint.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">نعنع</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>نعنع</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="coord-item">
-                            <span class="coord-label">الدقة:</span>
-                            <span id="accuracyValue" class="coord-value">--</span>
+                        <div class="item-card" data-item="علكة بولو" data-price="17000" data-img="shesha/bubblegum.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">علكة بولو</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>علكة بولو</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="عنب" data-price="17000" data-img="shesha/grape.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">عنب</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>عنب</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="لوف" data-price="17000" data-img="shesha/love.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">لوف</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>لوف</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="status-card">
-                <div class="status-header">
-                    <i class="fas fa-info-circle"></i>
-                    <h3>حالة التحديد</h3>
+                <!-- Drinks Section -->
+                <div id="drinks" class="category-section">
+                    <h2 class="section-title">المشروبات <span class="price-tag">10,000 ليرة</span></h2>
+                    <div class="items-grid">
+                        <div class="item-card" data-item="بيبسي" data-price="10000" data-img="drinks/pepsi.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">بيبسي</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>بيبسي</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="مينردا" data-price="10000" data-img="drinks/mirinda.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">مينردا</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>مينردا</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="سفن" data-price="10000" data-img="drinks/seven.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">سفن</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>سفن</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="زويا فريز" data-price="10000" data-img="drinks/zoya_freeze.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">زويا فريز</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>زويا فريز</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="زويا اناناس" data-price="10000" data-img="drinks/zoya_pineapple.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">زويا اناناس</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>زويا اناناس</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="مشروب طاقة" data-price="10000" data-img="drinks/energy.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">مشروب طاقة</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>مشروب طاقة</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="سلسل برتقال" data-price="10000" data-img="drinks/salsal_orange.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">سلسل برتقال</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>سلسل برتقال</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="سلس اناناس" data-price="10000" data-img="drinks/salsal_pineapple.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">سلس اناناس</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>سلس اناناس</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="سلس منغا" data-price="10000" data-img="drinks/salsal_mango.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">سلس منغا</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>سلس منغا</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="statusMessage" class="status-content">
-                    اضغط على زر "تحديد موقعي" للبدء
-                </div>
-            </div>
 
-            <div class="instructions">
-                <h2><i class="fas fa-book-open"></i> كيفية الاستخدام</h2>
-                <div class="instructions-grid">
-                    <div class="instruction-item">
-                        <div class="instruction-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                <!-- Desserts Section -->
+                <div id="desserts" class="category-section">
+                    <h2 class="section-title">الحلويات <span class="partner-tag">شريكنا: كاندي</span></h2>
+                    <div class="items-grid">
+                        <div class="item-card" data-item="كاتو شوكلا" data-price="25000" data-img="sweets/chocolate_cake.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">كاتو شوكلا</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>كاتو شوكلا</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="instruction-text">
-                            <h4>تحديد الموقع</h4>
-                            <p>اضغط على زر "تحديد موقعي" للعثور على موقعك الحالي</p>
+                        <div class="item-card" data-item="كاتو حليب" data-price="25000" data-img="sweets/milk_cake.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">كاتو حليب</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>كاتو حليب</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="تشيز كيك" data-price="25000" data-img="sweets/cheesecake.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">تشيز كيك</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>تشيز كيك</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="براوني" data-price="25000" data-img="sweets/brownie.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">براوني</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>براوني</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" data-item="سلطة نوتيلا" data-price="25000" data-img="sweets/nutella_salad.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">سلطة نوتيلا</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>سلطة نوتيلا</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="instruction-item">
-                        <div class="instruction-icon">
-                            <i class="fas fa-redo"></i>
+                </div>
+
+                <!-- Games Section -->
+                <div id="games" class="category-section">
+                    <h2 class="section-title">الألعاب</h2>
+                    <div class="items-grid">
+                        <div class="item-card" data-item="بلايستيشن 4 (24 ساعة)" data-price="100000" data-img="games/ps4.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">PS4</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>بلايستيشن 4</h3>
+                                <p class="item-desc">إيجار 24 ساعة مع 2 يد تحكم</p>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="instruction-text">
-                            <h4>إعادة التعيين</h4>
-                            <p>استخدم زر "العودة للاذقية" للرجوع إلى الخريطة الرئيسية</p>
+                        <div class="item-card" data-item="شدة" data-price="5000" data-img="games/shadda.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">شدة</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>شدة</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="instruction-item">
-                        <div class="instruction-icon">
-                            <i class="fas fa-search"></i>
+                        <div class="item-card" data-item="مونوبالي" data-price="10000" data-img="games/monopoly.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">مونوبالي</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>مونوبالي</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="instruction-text">
-                            <h4>التكبير والتصغير</h4>
-                            <p>استخدم أزرار + و - لتكبير أو تصغير الخريطة</p>
+                        <div class="item-card" data-item="جاكارو" data-price="10000" data-img="games/jackaroo.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">جاكارو</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>جاكارو</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="instruction-item">
-                        <div class="instruction-icon">
-                            <i class="fas fa-hand-pointer"></i>
-                        </div>
-                        <div class="instruction-text">
-                            <h4>النقر على الخريطة</h4>
-                            <p>انقر على أي مكان في الخريطة لإضافة علامة جديدة</p>
+                        <div class="item-card" data-item="مكدوس" data-price="10000" data-img="games/makdous.png">
+                            <div class="item-img">
+                                <div class="img-placeholder">مكدوس</div>
+                            </div>
+                            <div class="item-info">
+                                <h3>مكدوس</h3>
+                                <div class="item-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer>
-            <div class="footer-content">
-                <p>
-                    <i class="fas fa-code"></i> 
-                    تم التطوير باستخدام Leaflet.js
-                    <i class="fas fa-heart"></i>
-                </p>
-                <p class="location-info">
-                    <i class="fas fa-map-pin"></i>
-                    مركز الخريطة: اللاذقية، سوريا
-                </p>
-            </div>
-        </footer>
+        <!-- Checkout Button (Fixed at bottom) -->
+        <div class="bottom-checkout">
+            <button class="checkout-btn" id="checkout-btn">
+                <span class="checkout-text">طلب والدفع</span>
+                <span class="checkout-total">0 ل.س</span>
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
     </div>
 
-    <!-- Leaflet JS -->
+    <!-- Cart Side Menu -->
+    <div id="cart-side-menu" class="cart-side-menu">
+        <div class="cart-side-header">
+            <h2><i class="fas fa-shopping-cart"></i> سلة الطلبات</h2>
+            <button class="close-cart" id="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-side-body">
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be added here dynamically -->
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-basket"></i>
+                    <p>سلة الطلبات فارغة</p>
+                    <p class="empty-cart-sub">أضف عناصر من القائمة</p>
+                </div>
+            </div>
+            <div class="cart-side-summary">
+                <div class="cart-summary-row">
+                    <span>المجموع</span>
+                    <span id="cart-total-summary">0 ليرة</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span>رسوم التوصيل</span>
+                    <span>5,000 ليرة</span>
+                </div>
+                <div class="cart-summary-row total">
+                    <span>المجموع الكلي</span>
+                    <span id="cart-grand-total">5,000 ليرة</span>
+                </div>
+                <button class="side-checkout-btn" id="side-checkout-btn">متابعة الطلب <i class="fas fa-arrow-left"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تأكيد الطلب</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="order-summary">
+                    <h3>ملخص طلباتك</h3>
+                    <div id="order-summary-items"></div>
+                    <div class="order-summary-row">
+                        <span>المجموع</span>
+                        <span id="order-subtotal">0 ليرة</span>
+                    </div>
+                    <div class="order-summary-row">
+                        <span>رسوم التوصيل</span>
+                        <span>5,000 ليرة</span>
+                    </div>
+                    <div class="order-summary-row total">
+                        <span>المجموع الكلي</span>
+                        <span id="order-grand-total">5,000 ليرة</span>
+                    </div>
+                </div>
+                <button class="confirm-btn" id="confirm-order">موافق ومتابعة <i class="fas fa-map-marker-alt"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div id="map-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تحديد موقع التوصيل</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body map-modal-body">
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+                <div class="map-controls">
+                    <button class="map-btn" id="find-location">
+                        <i class="fas fa-location-arrow"></i> تحديد موقعي الحالي
+                    </button>
+                    <button class="map-btn" id="confirm-location">
+                        <i class="fas fa-check"></i> تأكيد هذا الموقع
+                    </button>
+                </div>
+                <div class="location-info">
+                    <p id="selected-location-text">لم يتم تحديد موقع بعد</p>
+                    <button class="whatsapp-btn" id="send-whatsapp" disabled>
+                        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتس اب
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Modal -->
+    <div id="whatsapp-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>الطلب جاهز للإرسال</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="whatsapp-info">
+                    <p>سيتم إرسال الطلب إلى الرقم: <strong>+963945349776</strong></p>
+                    <div class="whatsapp-message" id="whatsapp-message"></div>
+                    <a class="whatsapp-send-btn" id="whatsapp-send-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
