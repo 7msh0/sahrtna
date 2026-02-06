@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة الموقع التفاعلية</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Cairo Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-map-marked-alt"></i> خريطة الموقع التفاعلية</h1>
+                <p class="subtitle">ابحث عن موقعك الحالي وحدده على الخريطة بنقطة حمراء</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="control-panel">
+                <button id="locateBtn" class="btn locate-btn">
+                    <i class="fas fa-location-crosshairs"></i>
+                    <span>تحديد موقعي</span>
+                </button>
+                
+                <button id="resetBtn" class="btn reset-btn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>العودة للاذقية</span>
+                </button>
+                
+                <div class="zoom-controls">
+                    <button id="zoomIn" class="zoom-btn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button id="zoomOut" class="zoom-btn">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div id="map"></div>
+                
+                <div class="coordinates-card">
+                    <div class="coords-header">
+                        <i class="fas fa-globe-asia"></i>
+                        <h3>الإحداثيات</h3>
+                    </div>
+                    <div class="coords-content">
+                        <div class="coord-item">
+                            <span class="coord-label">خط العرض:</span>
+                            <span id="latValue" class="coord-value">--</span>
+                        </div>
+                        <div class="coord-item">
+                            <span class="coord-label">خط الطول:</span>
+                            <span id="lngValue" class="coord-value">--</span>
+                        </div>
+                        <div class="coord-item">
+                            <span class="coord-label">الدقة:</span>
+                            <span id="accuracyValue" class="coord-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>حالة التحديد</h3>
+                </div>
+                <div id="statusMessage" class="status-content">
+                    اضغط على زر "تحديد موقعي" للبدء
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h2><i class="fas fa-book-open"></i> كيفية الاستخدام</h2>
+                <div class="instructions-grid">
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h4>تحديد الموقع</h4>
+                            <p>اضغط على زر "تحديد موقعي" للعثور على موقعك الحالي</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-redo"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h4>إعادة التعيين</h4>
+                            <p>استخدم زر "العودة للاذقية" للرجوع إلى الخريطة الرئيسية</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h4>التكبير والتصغير</h4>
+                            <p>استخدم أزرار + و - لتكبير أو تصغير الخريطة</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-hand-pointer"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h4>النقر على الخريطة</h4>
+                            <p>انقر على أي مكان في الخريطة لإضافة علامة جديدة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>
+                    <i class="fas fa-code"></i> 
+                    تم التطوير باستخدام Leaflet.js
+                    <i class="fas fa-heart"></i>
+                </p>
+                <p class="location-info">
+                    <i class="fas fa-map-pin"></i>
+                    مركز الخريطة: اللاذقية، سوريا
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
